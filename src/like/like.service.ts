@@ -14,7 +14,7 @@ export class LikeService {
 
      async like(idAutomobila:number, idKorisnika:number){
           let like = await this.likeRepository.findOne({where:{automobil:{id: idAutomobila}, korisnik: {id: idKorisnika}}})
-          if( like !== null ) throw new HttpException("Označili ste da .",HttpStatus.UNAUTHORIZED)
+          if( like !== null ) throw new HttpException("Vec ste oznacili da vam se automobil svidja.",HttpStatus.UNAUTHORIZED)
   
           like = new Like();
           let korisnik = await this.korisnikRepository.findOne({where: {id:idKorisnika}});

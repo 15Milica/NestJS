@@ -7,7 +7,7 @@ export class IznajmljivanjeDto{
           this.datum = iznajmljivanje.datum;
           this.dana = iznajmljivanje.dana;
           this.korisnikId = iznajmljivanje.korisnik.id;
-          this.autmobilId = iznajmljivanje.automobil.id;
+          this.automobilId = iznajmljivanje.automobil.id;
      }
     
      id: number;
@@ -15,5 +15,5 @@ export class IznajmljivanjeDto{
      dana: number;
      zavrseno: boolean;
      korisnikId: number;
-     autmobilId: number;
+     automobilId: number;
 }
