@@ -1,3 +1,9 @@
+import { Automobil } from "src/models/automobil";
+import { Iznajmljivanje } from "src/models/iznajmljivanje";
+import { Korisnik } from "src/models/korisnik";
+import { Like } from "src/models/like";
+import { Radnja } from "src/models/radnja";
+import { SlikaAutomobila } from "src/models/slikaAutomobila";
 import { ConnectionOptions } from "typeorm";
 
 export const typeOrmConfig: ConnectionOptions ={ 
@@ -6,6 +12,7 @@ export const typeOrmConfig: ConnectionOptions ={
      port:5432,
      username:'postgres',
      password:'1234',
-     entities:[],
+     entities:[Korisnik,Automobil,Radnja,Like,Iznajmljivanje,SlikaAutomobila],
+     database:"postgres",
      synchronize:true
 }

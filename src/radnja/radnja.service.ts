@@ -12,7 +12,7 @@ export class RadnjaService {
      ){}
 
      async preuzmiRadnje() {          
-          return this.radnjaRepository;
+          return this.radnjaRepository.find();
      }
 
      async dodajRadnju(radnjaDto: RadnjaDto) {
@@ -25,11 +25,15 @@ export class RadnjaService {
           this.radnjaRepository.delete(id);
      }
 
-     async izmeniRadnju(radnjaDto: RadnjaDto) {
-          let radnja = this.radnjaRepository.findOne({where: {id: radnjaDto.id}});
-          if(radnja === null) throw new HttpException("Ne postoji radnja!", HttpStatus.NOT_FOUND)
+     async izmeniRadnju(radnjaDto: RadnjaDto) { 
+          const radnja = await this.radnjaRepository.findOne({ where: { id: radnjaDto.id } });
+          
+          if (!radnja) {
+          throw new HttpException("Ne postoji radnja sa datim ID-om.", HttpStatus.NOT_FOUND);
+          }
+          
           await this.radnjaRepository.update(radnjaDto.id, radnjaDto);
-          return radnjaDto;
+          return radnjaDto; 
      }
 
      async dodajAutomobilURadnji(idRadnje: number, idAutomobila: number){

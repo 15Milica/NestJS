@@ -35,8 +35,12 @@ export class LikeService {
           let automobil = await this.automobilRepository.findOne({where: {id:idAutomobila}});
           if(automobil == null) throw new HttpException("Automobil ne postoji",HttpStatus.NOT_FOUND);
 
-          let broj = automobil.likes.length;
-          return broj;
+          if(automobil.likes ==  null){
+             return 0;
+          } else{
+               let broj = automobil.likes.length;
+               return broj;
+          }
      }
 
      async deleteLike(idLike:number){

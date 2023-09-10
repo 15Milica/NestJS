@@ -1,6 +1,9 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, UseGuards } from '@nestjs/common';
 import { AutomobilService } from './automobil.service';
 import { AutomobilDto } from 'src/dto/automobil.dto';
+import JwtAuthGuard from 'src/autentifikacija/jwtAuth.guard';
+import { Role } from 'src/autentifikacija/Role/Role';
+import { Roles } from 'src/autentifikacija/Role/roles.decorator';
 
 @Controller('automobil')
 export class AutomobilController {
@@ -16,25 +19,22 @@ export class AutomobilController {
         return this.automobilService.detaljno(id);
     }
     
-    //@UseGuards(JwtAuthenticationGuard)
+    @UseGuards(JwtAuthGuard)
+    @Roles(Role.USER)
     @Get("SvaVozilaKorisnika/:id")
     preuzmiSvaVozilaKorisnika(@Param("id", ParseIntPipe) id: number){
         return this.automobilService.sviAutomobiliKorisnika(id)
     }
 
-    //@UseGuards(JwtAuthenticationGuardRadnik)
-    @Get("PretragaSlobodna/:proizvodjac/:grad")
-    pretragaSlobodna(@Param() params) {
-        return this.automobilService.pretraziSlobodneAutomobile(params.grad,params.proizvodjac);
-    }
-
-    //@UseGuards(JwtAuthenticationGuardRadnik)
+    @UseGuards(JwtAuthGuard)
+    @Roles(Role.ADMIN)
     @Post("Dodaj")
     dodajVozilo(@Body() automobilDto : AutomobilDto){
         return this.automobilService.dodajAutomobil(automobilDto);
     }
     
-    //@UseGuards(JwtAuthenticationGuardRadnik)
+    @UseGuards(JwtAuthGuard)
+    @Roles(Role.ADMIN)
     @Delete("Obrisi/:id")
     obrisiVozilo(@Param("id", ParseIntPipe) id: number) {
         this.automobilService.obrisiAutomobil(id)

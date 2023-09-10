@@ -8,7 +8,7 @@ async function bootstrap() {
   app.enableCors({
     credentials:true,
     origin:"http://loacalhost"
-  })
+  })  
   await app.listen(3000);
 }
 bootstrap();

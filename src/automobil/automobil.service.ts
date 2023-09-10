@@ -17,7 +17,7 @@ export class AutomobilService {
                  @InjectRepository(Like) private likeRepository:Repository<Like>) {}
 
     preuzmiSveAutomobile() {
-        return this.automobilRepository.find({relations:["slike","radnja", "marka", "model"]});
+        return this.automobilRepository.find();
     }
 
     async pretraziSlobodneAutomobile(grad: string, proizvodjac:string) {
@@ -49,7 +49,7 @@ export class AutomobilService {
     }
 
     async detaljno(id: number) {
-        let vozilo = await this.automobilRepository.findOne({where:{id}, relations: ["centar","slike"]});
+        let vozilo = await this.automobilRepository.findOne({where:{id}, relations: ["radnja","slike"]});
         if(vozilo === null) throw new HttpException("Nema tog vozila",HttpStatus.NOT_FOUND);
         return vozilo;
     }
