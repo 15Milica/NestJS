@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Param, Put, UseGuards } from '@nestjs/common';
 import { KorisnikService } from './korisnik.service';
 import JwtAuthGuard from 'src/autentifikacija/jwtAuth.guard';
+import JwtAuthGuardAdmin from 'src/autentifikacija-admin/jwtAuthAdmin.guard';
 
 @Controller('korisnik')
 export class KorisnikController {
@@ -12,7 +13,7 @@ export class KorisnikController {
          this.korisnikService.promeniLozinku(email, staraLozinka, novaLozinka);
      }
  
-     //@UseGuards(JwtAuthenticationGuardRadnik)
+     @UseGuards(JwtAuthGuardAdmin)
      @Get("PretraziKorisnike/:email")
      pretraziKorisnike(@Param() {email}) {
          return this.korisnikService.PretraziKorisnike(email);

@@ -22,6 +22,17 @@ export class RadnjaService {
      }
 
      async obrisiRadnju(id: number) {
+          /*const radnja = await this.radnjaRepository.findOne({ where: { id: id } });
+          if(radnja.automobili.length != 0 && radnja != null){
+               for (let i=0; i<radnja.automobili.length; i++)
+               {
+                    const automobil = await this.automobilRepository.findOne({ where: { id: radnja.automobili[i].id} })
+                    if(automobil != null){
+                         automobil.radnja = null;
+                         await this.automobilRepository.update(automobil.id, automobil);
+                    }
+               }
+          }*/
           this.radnjaRepository.delete(id);
      }
 

@@ -49,8 +49,8 @@ export class AuthService {
        }
  
  
-     public KolacicSaJwtTokenon(korisnikId: number, role: string) {
-         const TokenPayload: Token = {userId:korisnikId, role: role}
+     public KolacicSaJwtTokenon(korisnikId: number) {
+         const TokenPayload: Token = {userId:korisnikId}
          
          const token= this.jwtService.sign(TokenPayload)
          return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${"1h"}`;

@@ -26,9 +26,6 @@ export class Korisnik {
      })
      email: string;
 
-     @Column({ nullable: false, unique: false })
-     role: string;
-
      @Column()
      lozinka: string;
 

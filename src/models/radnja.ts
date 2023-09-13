@@ -16,6 +16,9 @@ export class Radnja{
      @Column()
      telefon:string;
 
+     @Column()
+     slika:string;
+
      @OneToMany(type=>Automobil, automobil=>automobil.radnja)
      automobili: Automobil[];
 }

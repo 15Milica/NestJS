@@ -8,7 +8,6 @@ export class KorisnikDto {
           this.email = korisnik.email;
           this.lozinka = korisnik.lozinka;
           this.brojTelefona = korisnik.brojTelefona;
-          this.role = korisnik.role;
      }
      id: number;
      ime: string;
@@ -16,5 +15,4 @@ export class KorisnikDto {
      email: string;
      lozinka: string;
      brojTelefona: number;
-     role: string;
 }

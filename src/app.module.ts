@@ -9,9 +9,11 @@ import { LikeModule } from './like/like.module';
 import { IznajmljivanjeModule } from './iznajmljivanje/iznajmljivanje.module';
 import { AutomobilModule } from './automobil/automobil.module';
 import { AuthModule } from './autentifikacija/auth/auth.module';
+import { AdminModule } from './admin/admin.module';
+import { AuthAdminModule } from './autentifikacija-admin/auth-admin/auth-admin.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(typeOrmConfig), AuthModule, KorisnikModule, AutomobilModule, RadnjaModule, LikeModule, IznajmljivanjeModule, AuthModule],
+  imports: [TypeOrmModule.forRoot(typeOrmConfig), KorisnikModule, AutomobilModule, RadnjaModule, LikeModule, IznajmljivanjeModule, AuthModule, AdminModule, AuthAdminModule],
   controllers: [AppController],
   providers: [AppService],
 })

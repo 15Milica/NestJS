@@ -6,9 +6,11 @@ export class RadnjaDto{
           this.naziv = radnja.naziv;
           this.adresa = radnja.adresa;
           this.telefon = radnja.telefon;
+          this.slika = radnja.slika;
      }
      id: number;
      naziv: string;
      adresa: string;
-     telefon:string;
+     telefon: string;
+     slika: string;
 }

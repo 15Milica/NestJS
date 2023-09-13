@@ -1,9 +1,8 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
 import { RadnjaService } from './radnja.service';
 import { RadnjaDto } from 'src/dto/radnja';
-import { Role } from 'src/autentifikacija/Role/Role';
-import { Roles } from 'src/autentifikacija/Role/roles.decorator';
 import JwtAuthGuard from 'src/autentifikacija/jwtAuth.guard';
+import JwtAuthGuardAdmin from 'src/autentifikacija-admin/jwtAuthAdmin.guard';
 
 @Controller('radnja')
 export class RadnjaController {
@@ -15,29 +14,25 @@ export class RadnjaController {
          return this.radnjaService.preuzmiRadnje();
      }
      
-     @UseGuards(JwtAuthGuard)
-     @Roles(Role.ADMIN)
+     @UseGuards(JwtAuthGuardAdmin)
      @Post("DodajRadnju")
      dodajRadnju(@Body() radnjaDto: RadnjaDto) {
          return this.radnjaService.dodajRadnju(radnjaDto);
      }
  
-     @UseGuards(JwtAuthGuard)
-     @Roles(Role.ADMIN)
+     @UseGuards(JwtAuthGuardAdmin)
      @Put("IzmeniRadnju")
      izmeniRadnju(@Body() radnjaDto: RadnjaDto) {
          return this.radnjaService.izmeniRadnju(radnjaDto);
      }
-
-     @UseGuards(JwtAuthGuard)
-     @Roles(Role.ADMIN)
+     
+     @UseGuards(JwtAuthGuardAdmin)
      @Delete("IzbrisiRadnju/:id")
      izbrisiRadnju(@Param("id", ParseIntPipe) id: number) {
          return this.radnjaService.obrisiRadnju(id);
      }
      
-     @UseGuards(JwtAuthGuard)
-     @Roles(Role.ADMIN)
+     @UseGuards(JwtAuthGuardAdmin)
      @Put("DodajAutomobilURadnji/:idRadnje/:idAutomobila")
      dodajAutomobilURadnji(@Param("idRadnje",ParseIntPipe) idRadnje:number, @Param("idAutomobila",ParseIntPipe) idAutomobila:number) {
          return this.radnjaService.dodajAutomobilURadnji(idRadnje,idAutomobila);

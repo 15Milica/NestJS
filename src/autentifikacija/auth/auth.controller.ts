@@ -23,7 +23,7 @@ export class AuthController {
      async logIn(@Req() request: RequestSaKorisnikom, @Res() response: Response) {
          const korisnik = <Korisnik>request.user;
          
-         const cookie = this.autenService.KolacicSaJwtTokenon(korisnik.id, korisnik.role);
+         const cookie = this.autenService.KolacicSaJwtTokenon(korisnik.id);
          response.setHeader('Set-Cookie', cookie)
          
          korisnik.lozinka = undefined;

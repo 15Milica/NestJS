@@ -2,12 +2,11 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, UseGuards } f
 import { AutomobilService } from './automobil.service';
 import { AutomobilDto } from 'src/dto/automobil.dto';
 import JwtAuthGuard from 'src/autentifikacija/jwtAuth.guard';
-import { Role } from 'src/autentifikacija/Role/Role';
-import { Roles } from 'src/autentifikacija/Role/roles.decorator';
+import JwtAuthGuardAdmin from 'src/autentifikacija-admin/jwtAuthAdmin.guard';
 
 @Controller('automobil')
 export class AutomobilController {
-     constructor(private automobilService: AutomobilService){}
+    constructor(private automobilService: AutomobilService){}
 
     @Get("SviAutomobili")
     preuzmiSveAutomobile() {
@@ -20,21 +19,18 @@ export class AutomobilController {
     }
     
     @UseGuards(JwtAuthGuard)
-    @Roles(Role.USER)
     @Get("SvaVozilaKorisnika/:id")
     preuzmiSvaVozilaKorisnika(@Param("id", ParseIntPipe) id: number){
         return this.automobilService.sviAutomobiliKorisnika(id)
     }
 
-    @UseGuards(JwtAuthGuard)
-    @Roles(Role.ADMIN)
+    @UseGuards(JwtAuthGuardAdmin)
     @Post("Dodaj")
     dodajVozilo(@Body() automobilDto : AutomobilDto){
         return this.automobilService.dodajAutomobil(automobilDto);
     }
     
-    @UseGuards(JwtAuthGuard)
-    @Roles(Role.ADMIN)
+    @UseGuards(JwtAuthGuardAdmin)
     @Delete("Obrisi/:id")
     obrisiVozilo(@Param("id", ParseIntPipe) id: number) {
         this.automobilService.obrisiAutomobil(id)
