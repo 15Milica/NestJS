@@ -6,7 +6,7 @@ import { Admin } from "src/models/admin";
 
 
 @Injectable()
-export class LocalStrategy extends PassportStrategy(Strategy) {
+export class LocalStrategy extends PassportStrategy(Strategy, 'localAdmin') {
   constructor(private autenAdminService: AuthAdminService) {
     super({
       usernameField: 'email',

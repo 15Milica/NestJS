@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { Admin } from 'typeorm';
+import { Admin } from 'src/models/admin';
 
  
 interface RequestSaAdminom extends Request {

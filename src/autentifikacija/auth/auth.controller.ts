@@ -7,7 +7,6 @@ import LocalAuthGuard from '../loacalAuth.guard';
 import JwtAuthGuard from '../jwtAuth.guard';
 import RequestSaKorisnikom from '../requestKorisinik';
 
-
 @Controller('auth')
 export class AuthController {
      constructor(private readonly autenService : AuthService) {}
@@ -22,10 +21,8 @@ export class AuthController {
      @Post('log-in')
      async logIn(@Req() request: RequestSaKorisnikom, @Res() response: Response) {
          const korisnik = <Korisnik>request.user;
-         
          const cookie = this.autenService.KolacicSaJwtTokenon(korisnik.id);
          response.setHeader('Set-Cookie', cookie)
-         
          korisnik.lozinka = undefined;
          
          return response.send(korisnik);

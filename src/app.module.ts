@@ -13,7 +13,7 @@ import { AdminModule } from './admin/admin.module';
 import { AuthAdminModule } from './autentifikacija-admin/auth-admin/auth-admin.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(typeOrmConfig), KorisnikModule, AutomobilModule, RadnjaModule, LikeModule, IznajmljivanjeModule, AuthModule, AdminModule, AuthAdminModule],
+  imports: [TypeOrmModule.forRoot(typeOrmConfig), AuthModule, KorisnikModule, AutomobilModule, RadnjaModule, LikeModule, IznajmljivanjeModule, AuthAdminModule, AdminModule],
   controllers: [AppController],
   providers: [AppService],
 })

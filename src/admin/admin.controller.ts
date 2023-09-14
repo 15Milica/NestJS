@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, UseGuards } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import JwtAuthGuardAdmin from 'src/autentifikacija-admin/jwtAuthAdmin.guard';
 import { AdminDto } from 'src/dto/admin.dto';
@@ -9,7 +9,7 @@ export class AdminController {
 
      @UseGuards(JwtAuthGuardAdmin)
      @Get(":id")
-     public getAdmin(@Param("id", ParseIntPipe) id: number){ 
+     getAdmin(@Param("id", ParseIntPipe) id: number){ 
          return this.adminService.preuzmiPrekoId(id);
      }
  

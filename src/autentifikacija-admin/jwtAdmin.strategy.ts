@@ -7,7 +7,7 @@ import { Token } from 'src/autentifikacija/token';
 import { AdminService } from 'src/admin/admin.service';
  
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class JwtStrategy extends PassportStrategy(Strategy, 'jwtAdmin') {
   constructor(
     private readonly adminService: AdminService,
   ) {
