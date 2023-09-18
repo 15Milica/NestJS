@@ -27,7 +27,7 @@ export class IznajmljivanjeService {
                 datum: iznajmljivanje.datum,
                 dana: iznajmljivanje.dana,
                 zavrseno: iznajmljivanje.zavrseno,
-                automobil: automobil.marka + " " + automobil.model + " " + automobil.specifikacije,
+                automobil: automobil.marka + " " + automobil.model,
                 cenaUkupna: automobil.cena * iznajmljivanje.dana
             });
         }
@@ -42,7 +42,7 @@ export class IznajmljivanjeService {
         if(!automobil) throw new HttpException("Nema trazenog automobila.",HttpStatus.NOT_FOUND);
 
         automobil.iznajmljivanja.forEach(iznm=>{
-            if(iznm.zavrseno == false) throw new HttpException("Ne moze da se iznajmi automobil koji nije vracen.",HttpStatus.UNAUTHORIZED);
+            if(iznm.zavrseno == false) throw new HttpException("Ne moze da se iznajmi automobil koji nije vracen.",HttpStatus.BAD_REQUEST);
         })
 
         iznajmljivanje.dana = iznajmljivanjeDto.dana;
@@ -78,10 +78,10 @@ export class IznajmljivanjeService {
     }
 
     async zavrsiIznajmljivanje(id: number) {
-        let iznajmljivanje =await this.iznajmljivanjeRepository.findOne({where:{id}, relations:["vozilo"]});
+        let iznajmljivanje =await this.iznajmljivanjeRepository.findOne({where:{id}, relations:["automobil"]});
 
         if(!iznajmljivanje) throw new HttpException("Nema tog iznajmljivanja",HttpStatus.NOT_FOUND);
-        let automobil = await this.automobilRepository.findOne({where:{id:iznajmljivanje.automobil.id},relations:["voziloLogicko"]});
+        let automobil = await this.automobilRepository.findOne({where:{id:iznajmljivanje.automobil.id}});
         iznajmljivanje.zavrseno = true;
         this.iznajmljivanjeRepository.update(id,iznajmljivanje);
         let rezultat = {
@@ -89,7 +89,8 @@ export class IznajmljivanjeService {
             dana: iznajmljivanje.dana,
             datum: iznajmljivanje.datum,
             zavrseno:iznajmljivanje.zavrseno,
-            automobil: automobil.marka + " " + automobil.model + " " + automobil.specifikacije
+            automobil: automobil.marka + " " + automobil.model,
+            cenaUkupna: automobil.cena * iznajmljivanje.dana
         }
 
         return rezultat

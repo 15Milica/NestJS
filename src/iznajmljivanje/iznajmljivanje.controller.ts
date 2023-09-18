@@ -14,7 +14,7 @@ export class IznajmljivanjeController {
         return this.iznajmljivanjeServic.preuzmiIznajmljivanjaKorisnika(id);
     }
 
-    @UseGuards(JwtAuthGuardAdmin)
+    @UseGuards(JwtAuthGuard)
     @Post("Dodaj")
     dodaj(@Body() iznajmljivanjeDto: IznajmljivanjeDto) {
         return this.iznajmljivanjeServic.dodajIznajmljivanje(iznajmljivanjeDto);
@@ -26,13 +26,13 @@ export class IznajmljivanjeController {
         return this.iznajmljivanjeServic.updateIznajmljivanje(iznajmljivanjeDto);
     }   
     
-    @UseGuards(JwtAuthGuardAdmin)
+    @UseGuards(JwtAuthGuard)
     @Delete("Izbrisi/:id")
     izbrisi(@Param("id",ParseIntPipe) id: number) {
          this.iznajmljivanjeServic.izbirisiIznajmljivanje(id);
     }  
 
-    @UseGuards(JwtAuthGuardAdmin)
+    @UseGuards(JwtAuthGuard)
     @Put("Zavrsi/:id")
     zavrsi(@Param("id",ParseIntPipe) id: number) {
          this.iznajmljivanjeServic.zavrsiIznajmljivanje(id);
