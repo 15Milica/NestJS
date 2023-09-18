@@ -10,16 +10,10 @@ export class Automobil
    @PrimaryGeneratedColumn()
    id: number;
 
-   @Column({
-      unique:true,
-      nullable: true
-   })
+   @Column()
    marka: string;
    
-   @Column({
-      unique:true,
-      nullable: true
-   })
+   @Column()
    model: string;
    
    @Column()
@@ -41,7 +35,7 @@ export class Automobil
    likes: Like[];
 
    @OneToMany(type=>SlikaAutomobila, slikaAutomobila=>slikaAutomobila.automobil, {onDelete:"CASCADE"})
-   slike: SlikaAutomobila[];
+   slike: SlikaAutomobila[]
 
    @OneToMany(type=>Iznajmljivanje, iznajmljivanje=>iznajmljivanje.automobil)
    iznajmljivanja: Iznajmljivanje[] | undefined

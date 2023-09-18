@@ -13,6 +13,11 @@ export class RadnjaController {
      preuzmiRadnje() {
          return this.radnjaService.preuzmiRadnje();
      }
+
+     @Get("VratiAutomobileRadnje/:idRadnje")
+     preuzmiAutomoble(@Param("idRadnje", ParseIntPipe) idRadnje:number){
+        return this.radnjaService.vratiAutomobile(idRadnje);
+     }
      
      @UseGuards(JwtAuthGuardAdmin)
      @Post("DodajRadnju")

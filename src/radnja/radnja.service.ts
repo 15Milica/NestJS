@@ -22,17 +22,11 @@ export class RadnjaService {
      }
 
      async obrisiRadnju(id: number) {
-          /*const radnja = await this.radnjaRepository.findOne({ where: { id: id } });
-          if(radnja.automobili.length != 0 && radnja != null){
-               for (let i=0; i<radnja.automobili.length; i++)
-               {
-                    const automobil = await this.automobilRepository.findOne({ where: { id: radnja.automobili[i].id} })
-                    if(automobil != null){
-                         automobil.radnja = null;
-                         await this.automobilRepository.update(automobil.id, automobil);
-                    }
-               }
-          }*/
+          let radnja = await this.radnjaRepository.findOne({where:{id},relations:["automobili"]})
+          
+          for(let i = 0; i < radnja.automobili.length; i++){
+               await this.automobilRepository.delete(radnja.automobili[i].radnja)
+          }
           this.radnjaRepository.delete(id);
      }
 
@@ -55,5 +49,18 @@ export class RadnjaService {
           if(!automobil) throw new HttpException("Nema tog automobila.",HttpStatus.NOT_FOUND);
           automobil.radnja = radnja;
           await this.automobilRepository.update(automobil.id, automobil);
+     }
+     async vratiAutomobile(idRadnje:number){
+          let radnja = await this.radnjaRepository.findOne({ where: { id: idRadnje }, relations: ["automobili"] });
+          if(!radnja) throw new HttpException("Nema te radnje.",HttpStatus.NOT_FOUND);
+
+          let automobili: Automobil[] = []
+          if(radnja.automobili){
+               for(let i =0 ;i<radnja.automobili.length; i++){
+                    let automobil = await this.automobilRepository.findOne({ where: { id: radnja.automobili[i].id }, relations: ["slike", "radnja", "likes"] });
+                    automobili.push(automobil)
+               }
+          }
+          return automobili
      }
 }

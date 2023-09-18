@@ -14,7 +14,7 @@ export class LikeService {
 
      async like(idAutomobila:number, idKorisnika:number){
           let like = await this.likeRepository.findOne({where:{automobil:{id: idAutomobila}, korisnik: {id: idKorisnika}}})
-          if( like !== null ) throw new HttpException("Vec ste oznacili da vam se automobil svidja.",HttpStatus.UNAUTHORIZED)
+          if( like !== null ) throw new HttpException("Vec ste oznacili da vam se automobil svidja.",HttpStatus.BAD_REQUEST)
   
           like = new Like();
           let korisnik = await this.korisnikRepository.findOne({where: {id:idKorisnika}});
@@ -32,14 +32,13 @@ export class LikeService {
      }
      
      async brojLikova(idAutomobila:number){
-          let automobil = await this.automobilRepository.findOne({where: {id:idAutomobila}});
+          let automobil = await this.automobilRepository.findOne({where: {id:idAutomobila}, relations:["likes"]});
           if(automobil == null) throw new HttpException("Automobil ne postoji",HttpStatus.NOT_FOUND);
 
-          if(automobil.likes ==  null){
-             return 0;
-          } else{
-               let broj = automobil.likes.length;
-               return broj;
+          if (automobil.likes == null) {
+               return 0;
+          } else {
+               return automobil.likes.length;
           }
      }
 

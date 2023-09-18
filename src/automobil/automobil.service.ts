@@ -17,7 +17,7 @@ export class AutomobilService {
                  @InjectRepository(Like) private likeRepository:Repository<Like>) {}
 
     preuzmiSveAutomobile() {
-        return this.automobilRepository.find();
+        return this.automobilRepository.find({relations:["slike", "radnja", "likes"]});
     }
 
     async pretraziSlobodneAutomobile(grad: string, proizvodjac:string) {
@@ -37,14 +37,16 @@ export class AutomobilService {
 
     async dodajAutomobil(automobilDto: AutomobilDto) {
         let automobil = this.automobilRepository.create(automobilDto);
-       
-        let automobilSaIstomOznakom = await this.automobilRepository.findOne({where:{specifikacije:automobilDto.specifikacije}})
+
+        let autmobilSaIstomOznakom = await this.automobilRepository.findOne({where:{specifikacije: automobilDto.specifikacije}})
         
-        if(automobilSaIstomOznakom) throw new HttpException("Vec postoji sa istom oznakom",HttpStatus.UNAUTHORIZED);
+        if(autmobilSaIstomOznakom) throw new HttpException("Vec postoji sa istom oznakom",HttpStatus.UNAUTHORIZED);
         automobil = await this.automobilRepository.save(automobil);
-        let slika = this.slikeRepository.create(automobil.slike[0]);
+       
+        let slika = this.slikeRepository.create(automobil.slike[0]); 
         slika.automobil = automobil
         slika = await this.slikeRepository.save(slika);
+        
         return new AutomobilDto(automobil);
     }
 
@@ -68,6 +70,7 @@ export class AutomobilService {
 
     async obrisiAutomobil(id: number) {
         let automobil = await this.automobilRepository.findOne({where:{id},relations:["slike","likes","iznajmljivanja"]})
+       
         for(let i = 0; i < automobil.slike.length;i++){
             await this.slikeRepository.delete(automobil.slike[i].id)
         }
